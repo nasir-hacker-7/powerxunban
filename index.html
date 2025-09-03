@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Modz</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid #0f0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #0f0; }
+            to { text-shadow: 0 0 15px #0f0; }
+        }
+        p.description {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        section#form-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0f0;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            border-radius: 5px;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #00ff00;
+            box-shadow: 0 0 10px #0f0;
+        }
+        section#grid-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .grid-item {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0f0;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        section#privacy {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border-top: 1px solid #0f0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #0f0;
+        }
+        footer img {
+            width: 50px;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+        footer img:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <header>
+        <h1>Power Modz</h1>
+        <p class="description">Hacker A curious mind, breaking limits, exploring systems, shaping the digital world</p>
+    </header>
+    
+    <section id="form-section">
+        <form id="appealForm" class="card-container">
+            <div class="card">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="card">
+                <label for="country">Country:</label>
+                <input type="text" id="country" required>
+            </div>
+            <div class="card">
+                <label for="number">Number (with country code):</label>
+                <input type="text" id="number" placeholder="+92000000000" required>
+            </div>
+            <button type="submit">Submit Appeal</button>
+        </form>
+    </section>
+    
+    <section id="grid-section">
+        <h2>Contact Info</h2>
+        <div class="grid-container">
+            <div class="grid-item">Name: Power Modz</div>
+            <div class="grid-item">Email: powerxdeveloper@gmail.com</div>
+            <div class="grid-item">WhatsApp: +966593008766</div>
+        </div>
+    </section>
+    
+    <section id="privacy">
+        <h2>Privacy Policy</h2>
+        <p>We at Power Modz are committed to protecting your privacy. This website does not collect, store, or share any personal information entered into the forms. All data is processed client-side and used solely to generate an email draft for your WhatsApp appeal. We do not track users, use cookies, or log any activity.</p>
+        <p>By using this site, you agree that any information you provide is voluntary and at your own risk. We are not affiliated with WhatsApp or Meta, and this tool is provided for informational purposes only. We recommend reviewing WhatsApp's official terms and privacy policy.</p>
+        <p>If you have any questions, contact us via the provided links.</p>
+    </section>
+    
+    <footer>
+        <a href="https://wa.me/+966593008766" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo">
+        </a>
+        <a href="mailto:powerxdeveloper@gmail.com" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.svg" alt="Gmail Logo">
+        </a>
+    </footer>
+    
+    <script>
+        // Matrix Rain Effect
+        (function initializeMatrix() {
+            const canvas = document.getElementById('matrix');
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                console.error('Canvas context not supported');
+                return;
+            }
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,./<>?';
+            const fontSize = 10;
+            const columns = Math.floor(canvas.width / fontSize);
+            const drops = new Array(columns).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0F0';
+                ctx.font = `${fontSize}px monospace`;
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            // Run animation
+            setInterval(draw, 33);
+
+            // Resize canvas on window resize
+            window.addEventListener('resize', () => {
+                canvas.height = window.innerHeight;
+                canvas.width = window.innerWidth;
+                drops.length = Math.floor(canvas.width / fontSize);
+                drops.fill(1);
+            });
+        })();
+
+        // Form Submit Handler
+        document.getElementById('appealForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const country = document.getElementById('country').value;
+            const number = document.getElementById('number').value;
+            const message = `Name: ${name}\nCountry: ${country}\nNumber: ${number}\n\nI'm Accept I was Violate Your Terms Or Policy And I'm Really Sorry For That It's MistakeBut Some People Are Wrongly Reported my Number because I'm Sharing Real And Useful Message but He doesn't like it So He was Wrongly Reported my Number And my Account was BannedThis is my original Whatsapp so many Friends, Family or Business Clients or customer join with me on Whatsapp so my account is most important for me.I Requesting You To Unbanned My Whatsapp And Give me one Change I will Never Violate WhatsApp Term's Or Policy Please Understand My problem my number (${number}).`;
+            const subject = 'WhatsApp Ban Appeal';
+            const body = encodeURIComponent(message);
+            window.location.href = `mailto:support@whatsapp.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        });
+    </script>
+</body>
+</html>
